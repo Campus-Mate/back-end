@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from app import views
+from rest_framework.routers import DefaultRouter
+from app.views import BookViewSet
+
+router = DefaultRouter()
+router.register(r'books', BookViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
-
+    path('', views.home, name='home'), 
+    path('', include(router.urls)),
 ]
