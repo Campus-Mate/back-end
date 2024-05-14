@@ -28,4 +28,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', views.home, name='home'), 
     path('', include(router.urls)),
+    path('', views.post_list, name='post_list'),
 ]
