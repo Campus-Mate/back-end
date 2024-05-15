@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from app.views import serve_react_app
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('', serve_react_app, name='home'),  # 루트 URL에서 리액트 앱을 서빙
 
 ]
