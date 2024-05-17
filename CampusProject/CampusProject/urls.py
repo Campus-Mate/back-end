@@ -20,9 +20,9 @@ from app.views import serve_react_app  # app 폴더의 views에서 함수를 직
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('app/', include('allauth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),  
     path('', serve_react_app, name='home'),
-    path('api/app/', include('app.urls')),
+    path('app/', include('app.urls')),
 
 
 ]

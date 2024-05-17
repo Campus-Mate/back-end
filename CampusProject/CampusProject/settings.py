@@ -66,11 +66,11 @@ MIDDLEWARE = [
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
-    'naver': {
+    'kakao': {
         'APP': {
-            'client_id': 'ViGUm4K68FdrlvS0jx9r',
-            'secret': '98KX5wTB4z',
-            'key': '',
+            'client_id': 'cb4511d732c7aa08c8b898ce3d529b6a',
+            'secret': 'jn8xH097rurNUAyXNXwIhm1SlgBKgS47',
+            'key': ''
         }
     }
 }
