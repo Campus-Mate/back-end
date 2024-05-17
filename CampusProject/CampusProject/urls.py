@@ -19,8 +19,10 @@ from django.urls import path, include
 from app.views import serve_react_app  # app 폴더의 views에서 함수를 직접 임포트
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path('admin/', admin.site.urls),
+    path('app/', include('allauth.urls')),
     path('', serve_react_app, name='home'),
+    path('api/app/', include('app.urls')),
+
 
 ]
