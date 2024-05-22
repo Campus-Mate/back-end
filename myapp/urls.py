@@ -6,4 +6,4 @@ urlpatterns = [
     path('receive_id/', receive_id, name='receive_id'),
     path('show_id/', show_id, name='show_id'),
 ]
-    
+
