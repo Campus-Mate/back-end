@@ -5,16 +5,16 @@ const SendID = () => {
   const [id, setId] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
-  const [responseData, setResponseData] = useState(null); // 서버에서 받은 데이터를 저장할 상태
-  const [checkId, setCheckId] = useState(''); // 확인할 ID를 저장할 상태
-  const [checkResponse, setCheckResponse] = useState(null); // ID 확인 결과를 저장할 상태
+  const [responseData, setResponseData] = useState(null);  // 서버에서 받은 데이터를 저장할 상태
+  const [checkId, setCheckId] = useState('');  // 확인할 ID를 저장할 상태
+  const [checkResponse, setCheckResponse] = useState(null);  // ID 확인 결과를 저장할 상태
   const [error, setError] = useState(null);
 
   // 데이터 전송 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://3.38.60.101/api/receive_id/', { id_value: id, content, category }, {
+      const response = await axios.post('http://3.37.222.122/api/receive_id/', { id_value: id, content, category }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -29,7 +29,7 @@ const SendID = () => {
   // ID 확인 함수
   const handleCheckId = async () => {
     try {
-      const response = await axios.post('http://3.38.60.101/api/check_id/', { id_value: checkId }, {
+      const response = await axios.post('http://3.37.222.122/api/check_id/', { id_value: checkId }, {
         headers: {
           'Content-Type': 'application/json',
         }
