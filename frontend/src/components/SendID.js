@@ -14,7 +14,7 @@ const SendID = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/receive_id/', { id_value: id, content, category }, {
+      const response = await axios.post('http://3.38.60.101/api/receive_id/', { id_value: id, content, category }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -29,7 +29,7 @@ const SendID = () => {
   // ID 확인 함수
   const handleCheckId = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/check_id/', { id_value: checkId }, {
+      const response = await axios.post('http://3.38.60.101/api/check_id/', { id_value: checkId }, {
         headers: {
           'Content-Type': 'application/json',
         }

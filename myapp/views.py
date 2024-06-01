@@ -57,6 +57,9 @@ def check_id(request):
         print(f"Unexpected error occurred: {e}")
         return JsonResponse({'error': 'Internal Server Error'}, status=500)
 
+
+def index(request):
+    return render(request, 'index.html')  # index.html 템플릿 렌더링
 #2
 # #backend/myapp/views.py
 # from django.shortcuts import render

@@ -21,6 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include('myapp.urls')),
+    path('', include('myapp.urls')),  # 루트 URL을 myapp의 urls.py로 연결
 
     
 ]

@@ -27,10 +27,7 @@ SECRET_KEY = "django-insecure-iaybfi-0ozn1&guym6$!x$dg42^go)(&rn3$)a7isu^34e3p+w
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '3.38.60.101', 
-    'ec2-3-38-60-101.ap-northeast-2.compute.amazonaws.com', 
-    'localhost', 
-    '127.0.0.1'
+    '3.38.60.101'
 ]
 
 # Application definition
@@ -122,7 +119,8 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-CORS_ALLOW_ALL_ORIGINS = True  # CORS 설정
+CORS_ALLOW_ALL_ORIGINS =True
+ # CORS 설정
 CORS_ALLOW_CREDENTIALS = True  # 인증 정보를 포함한 요청을 허용
 
 # Static files (CSS, JavaScript, Images)
