@@ -49,10 +49,8 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # CORS 미들웨어 추가 (CommonMiddleware 위로 이동)
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "myproject.urls"
@@ -116,6 +114,11 @@ USE_TZ = True
 
 # CORS 설정
 CORS_ALLOW_ALL_ORIGINS = True
+
+# 접근 가능한 url 을 따로 관리
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
