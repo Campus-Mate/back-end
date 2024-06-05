@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from .models import IDRecord
 from .serializers import IDRecordSerializer
 import json
-
 @csrf_exempt
 @api_view(['POST'])  # RESTful API POST 요청을 처리
 def receive_id(request):
@@ -30,60 +29,12 @@ def show_id(request):
             'content': latest_record.content,
             'category': latest_record.category,
             'created_at': latest_record.created_at,
-            'title':latest_record.created_at
+            'title': latest_record.created_at
         })
     except IDRecord.DoesNotExist:
         return render(request, 'show_id.html', {
             'error': 'No records found'
         })
-# @csrf_exempt
-# @api_view(['POST'])
-# def check_id(request):
-#     # 클라이언트로부터 받은 ID 토큰
-#     id_token = request.data.get('id_value')
-    
-#     # 유효한 요청인지 확인합니다.
-#     if not id_token:
-#         return JsonResponse({'error': 'ID value is required'}, status=400)
-
-#     try:
-#         # 데이터베이스에서 해당 ID에 해당하는 모든 레코드를 조회합니다.
-#         records = IDRecord.objects.filter(id_value=id_token)
-        
-#         # 조회된 레코드들을 시리얼라이즈합니다.
-#         serializer = IDRecordSerializer(records, many=True)
-        
-#         # 시리얼라이즈된 데이터를 반환합니다.
-#         return JsonResponse(serializer.data, status=200)
-#     except IDRecord.DoesNotExist:
-#         return JsonResponse({'error': 'Record not found'}, status=404)
-#     except Exception as e:
-#         # 알 수 없는 예외가 발생한 경우 로그를 출력하고 500 에러를 반환합니다.
-#         print(f"Unexpected error occurred: {e}")
-#         return JsonResponse({'error': 'Internal Server Error'}, status=500)
-    
-# @csrf_exempt
-# @api_view(['POST'])
-# def check_id(request):
-#     # 클라이언트로부터 받은 ID 토큰
-#     id_token = request.data.get('id_value')
-    
-#     # 유효한 요청인지 확인합니다.
-#     if not id_token:
-#         return JsonResponse({'error': 'ID value is required'}, status=400)
-
-#     try:
-#         # 데이터베이스에서 ID 토큰과 일치하는 레코드를 찾습니다.
-#         record = IDRecord.objects.get(id_value=id_token)
-#         serializer = IDRecordSerializer(record)
-#         return JsonResponse(serializer.data, status=200)
-#     except IDRecord.DoesNotExist:
-#         return JsonResponse({'error': 'Record not found'}, status=404)
-#     except Exception as e:
-#         # 알 수 없는 예외가 발생한 경우 로그를 출력하고 500 에러를 반환합니다.
-#         print(f"Unexpected error occurred: {e}")
-#         return JsonResponse({'error': 'Internal Server Error'}, status=500)
-
 @csrf_exempt
 @api_view(['POST'])
 def check_id(request):
@@ -92,79 +43,17 @@ def check_id(request):
     
     # 유효한 요청인지 확인합니다.
     if not id_token:
-        return JsonResponse({'error': 'ID value is required77'}, status=400)
-
+        return JsonResponse({'error': 'ID value is required'}, status=400)
     try:
-        # 데이터베이스에서 ID 토큰과 일치하는 모든 레코드를 찾습니다.
-        records = IDRecord.objects.filter(id_value=id_token)
-        
-        # 시리얼라이즈합니다.
-        serializer = IDRecordSerializer(records, many=True)
-        
-        # 시리얼라이즈된 데이터를 반환합니다.
-        return JsonResponse(serializer.data, safe=False, status=200)
+        # 데이터베이스에서 ID 토큰과 일치하는 레코드를 찾습니다.
+        record = IDRecord.objects.get(id_value=id_token)
+        serializer = IDRecordSerializer(record)
+        return JsonResponse(serializer.data, status=200)
     except IDRecord.DoesNotExist:
-        return JsonResponse({'error': 'Record not found78'}, status=404)
+        return JsonResponse({'error': 'Record not found'}, status=404)
     except Exception as e:
         # 알 수 없는 예외가 발생한 경우 로그를 출력하고 500 에러를 반환합니다.
         print(f"Unexpected error occurred: {e}")
-        return JsonResponse({'error': 'Internal Server Error77'}, status=500)
-
-
+        return JsonResponse({'error': 'Internal Server Error'}, status=500)
 def index(request):
-    return render(request, 'index.html')  # index.html 템플릿 렌더링
-#2
-# #backend/myapp/views.py
-# from django.shortcuts import render
-# from django.views.decorators.csrf import csrf_exempt
-# from django.http import JsonResponse
-# import json
-# stored_id = None  # 전역 변수로 ID 값 저장
-# stored_content = None  # 전역 변수로 ID 값 저장
-# stored_date = None  # 전역 변수로 ID 값 저장
-# stored_category = None  # 전역 변수로 ID 값 저장
-# @csrf_exempt
-# def receive_id(request):
-#     if request.method == 'POST':
-#         global stored_id,stored_content,stored_date,stored_category
-#         data = json.loads(request.body)
-
-#         stored_id = data.get('id')
-#         stored_content = data.get('content')
-#         stored_date = data.get('date')
-#         stored_category = data.get('category')
-#         return JsonResponse({'message': 'ID received successfully'})
-        
-
-# def show_id(request):
-#     return render(request, 'show_id.html', {
-#         'id': stored_id,
-#         'content': stored_content,
-#         'date': stored_date,
-#         'category': stored_category
-#         })
-
-#1
-# from django.shortcuts import render
-# from rest_framework import status
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from .models import IDRecord
-# from .serializers import IDRecordSerializer
-
-# # ID 값을 저장할 전역 변수
-# stored_id = None
-
-# @api_view(['POST'])
-# def receive_id(request):
-#     global stored_id
-#     if request.method == 'POST':
-#         serializer = IDRecordSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             stored_id = serializer.data.get('id_value')  # 저장된 ID를 전역 변수에 저장
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# def show_id(request):
-#     return render(request, 'show_id.html', {'id': stored_id})
+    return render(request, 'index.html')

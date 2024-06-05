@@ -1,7 +1,7 @@
 from django.db import models
 
 class IDRecord(models.Model):
-    id_value = models.CharField(max_length=255)
+    id_value = models.CharField(max_length=255,unique=True)
     title = models.CharField(max_length=255)  # category 필드 추가
     content = models.TextField()  # content 필드 추가
     category = models.CharField(max_length=255)  # category 필드 추가
