@@ -16,7 +16,7 @@ const SendID = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://3.37.222.122:8001/api/receive_id/', { id_value: id, content, category }, {
+      const response = await axios.post('http://3.37.222.122:8001/api/receive_id/', { id_value: id, title, content, category }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -57,7 +57,7 @@ const SendID = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter content. no limit"
+          placeholder="Enter title. no limit"
         />
         <input
           type="text"
@@ -101,7 +101,7 @@ const SendID = () => {
         <div>
           <h3>Record Details</h3>
           <p>ID: {checkResponse.id_value}</p>
-          <p>Title: {responseData.title}</p>
+          <p>Title: {checkResponse.title}</p>
           <p>Content: {checkResponse.content}</p>
           <p>Category: {checkResponse.category}</p>
           <p>Created At: {checkResponse.created_at}</p>
