@@ -102,7 +102,7 @@ def check_id(request):
         serializer = IDRecordSerializer(records, many=True)
         
         # 시리얼라이즈된 데이터를 반환합니다.
-        return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.data, safe=False, status=200)
     except IDRecord.DoesNotExist:
         return JsonResponse({'error': 'Record not found78'}, status=404)
     except Exception as e:
