@@ -5,6 +5,8 @@ const SendID = () => {
   const [id, setId] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
+  const [title, setTitle] = useState('');
+
   const [responseData, setResponseData] = useState(null);  // 서버에서 받은 데이터를 저장할 상태
   const [checkId, setCheckId] = useState('');  // 확인할 ID를 저장할 상태
   const [checkResponse, setCheckResponse] = useState(null);  // ID 확인 결과를 저장할 상태
@@ -53,10 +55,17 @@ const SendID = () => {
         />
         <input
           type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter content. no limit"
+        />
+        <input
+          type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Enter content. no limit"
         />
+        
         <input
           type="text"
           value={category}
@@ -71,6 +80,7 @@ const SendID = () => {
         <div>
           <h3>Response Data:</h3>
           <p>ID: {responseData.id_value}</p>
+          <p>Title: {responseData.title}</p>
           <p>Content: {responseData.content}</p>
           <p>Category: {responseData.category}</p>
           <p>Created At: {responseData.created_at}</p> {/* created_at 필드 표시 */}
@@ -91,6 +101,7 @@ const SendID = () => {
         <div>
           <h3>Record Details</h3>
           <p>ID: {checkResponse.id_value}</p>
+          <p>Title: {responseData.title}</p>
           <p>Content: {checkResponse.content}</p>
           <p>Category: {checkResponse.category}</p>
           <p>Created At: {checkResponse.created_at}</p>

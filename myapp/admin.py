@@ -3,4 +3,4 @@ from .models import IDRecord
 
 @admin.register(IDRecord)
 class IDRecordAdmin(admin.ModelAdmin):
-    list_display = ('id_value', 'content', 'category', 'created_at')
+    list_display = ('id_value', 'title', 'content', 'category', 'created_at')

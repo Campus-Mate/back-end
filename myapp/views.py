@@ -29,7 +29,8 @@ def show_id(request):
             'id': latest_record.id_value,
             'content': latest_record.content,
             'category': latest_record.category,
-            'created_at': latest_record.created_at
+            'created_at': latest_record.created_at,
+            'title':latest_record.created_at
         })
     except IDRecord.DoesNotExist:
         return render(request, 'show_id.html', {
