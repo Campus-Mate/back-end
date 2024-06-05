@@ -47,9 +47,13 @@ def check_id(request):
         return JsonResponse({'error': 'ID value is required'}, status=400)
 
     try:
-        # 데이터베이스에서 ID 토큰과 일치하는 레코드를 찾습니다.
-        record = IDRecord.objects.get(id_value=id_token)
-        serializer = IDRecordSerializer(record)
+        # 데이터베이스에서 해당 ID에 해당하는 모든 레코드를 조회합니다.
+        records = IDRecord.objects.filter(id_value=id_token)
+        
+        # 조회된 레코드들을 시리얼라이즈합니다.
+        serializer = IDRecordSerializer(records, many=True)
+        
+        # 시리얼라이즈된 데이터를 반환합니다.
         return JsonResponse(serializer.data, status=200)
     except IDRecord.DoesNotExist:
         return JsonResponse({'error': 'Record not found'}, status=404)
@@ -57,6 +61,7 @@ def check_id(request):
         # 알 수 없는 예외가 발생한 경우 로그를 출력하고 500 에러를 반환합니다.
         print(f"Unexpected error occurred: {e}")
         return JsonResponse({'error': 'Internal Server Error'}, status=500)
+
 
 
 def index(request):
