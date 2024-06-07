@@ -22,19 +22,19 @@ def receive_id(request):
 @csrf_exempt
 @api_view(['POST'])
 def show_id(request):
+    id_token = request.data.get('id_value')
+    if not id_token:
+        return JsonResponse({'error': 'ID value is required'}, status=400)
     try:
-        latest_record = IDRecord.objects.latest('created_at')  # 가장 최근에 생성된 레코드를 조회
-        return render(request, 'show_id.html', {
-            'id': latest_record.id_value,
-            'content': latest_record.content,
-            'category': latest_record.category,
-            'created_at': latest_record.created_at,
-            'title': latest_record.created_at
-        })
-    except IDRecord.DoesNotExist:
-        return render(request, 'show_id.html', {
-            'error': 'No records found'
-        })
+        records = IDRecord.objects.filter(id_value=id_token)
+        if records.exists():
+            serializer = IDRecordSerializer(records, many=True)
+            return JsonResponse(serializer.data, status=200, safe=False)
+        else:
+            return JsonResponse({'error': 'Record not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error'}, status=500)
+
 @csrf_exempt
 @api_view(['POST'])
 def check_id(request):

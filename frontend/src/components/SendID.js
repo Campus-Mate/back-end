@@ -6,13 +6,11 @@ const SendID = () => {
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
-
-  const [responseData, setResponseData] = useState(null);  // 서버에서 받은 데이터를 저장할 상태
-  const [checkId, setCheckId] = useState('');  // 확인할 ID를 저장할 상태
-  const [checkResponse, setCheckResponse] = useState(null);  // ID 확인 결과를 저장할 상태
+  const [responseData, setResponseData] = useState(null);
+  const [checkId, setCheckId] = useState('');
+  const [checkResponse, setCheckResponse] = useState([]);
   const [error, setError] = useState(null);
 
-  // 데이터 전송 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -21,17 +19,16 @@ const SendID = () => {
           'Content-Type': 'application/json',
         }
       });
-      setResponseData(response.data);  // 서버에서 받은 데이터를 상태에 저장
+      setResponseData(response.data);
       console.log(response.data);
     } catch (error) {
       console.error('There was an error sending the ID!', error);
     }
   };
 
-  // ID 확인 함수
   const handleCheckId = async () => {
     try {
-      const response = await axios.post('http://3.37.222.122:8001/api/check_id/', { id_value: checkId }, {
+      const response = await axios.post('http://3.37.222.122:8001/api/show_id/', { id_value: checkId }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -40,7 +37,7 @@ const SendID = () => {
       setError(null);
     } catch (error) {
       setError('Record not found');
-      setCheckResponse(null);
+      setCheckResponse([]);
     }
   };
 
@@ -83,7 +80,7 @@ const SendID = () => {
           <p>Title: {responseData.title}</p>
           <p>Content: {responseData.content}</p>
           <p>Category: {responseData.category}</p>
-          <p>Created At: {responseData.created_at}</p> {/* created_at 필드 표시 */}
+          <p>Created At: {responseData.created_at}</p>
         </div>
       )}
       
@@ -97,14 +94,18 @@ const SendID = () => {
         <button onClick={handleCheckId}>Check ID</button>
       </div>
       
-      {checkResponse && (
+      {checkResponse.length > 0 && (
         <div>
           <h3>Record Details</h3>
-          <p>ID: {checkResponse.id_value}</p>
-          <p>Title: {checkResponse.title}</p>
-          <p>Content: {checkResponse.content}</p>
-          <p>Category: {checkResponse.category}</p>
-          <p>Created At: {checkResponse.created_at}</p>
+          {checkResponse.map(record => (
+            <div key={record.id}>
+              <p>ID: {record.id_value}</p>
+              <p>Title: {record.title}</p>
+              <p>Content: {record.content}</p>
+              <p>Category: {record.category}</p>
+              <p>Created At: {record.created_at}</p>
+            </div>
+          ))}
         </div>
       )}
       
