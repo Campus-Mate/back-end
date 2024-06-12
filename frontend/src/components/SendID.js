@@ -44,13 +44,15 @@ const SendID = () => {
   const handleDelete = async (idValue) => {
     try {
       await axios.delete('http://3.37.222.122:8001/api/delete_id/', {
-        data: { id_value: idValue },
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
+        data: { id_value: idValue } // 'data' 속성에 id_value 포함
       });
       setCheckResponse(checkResponse.filter(record => record.id_value !== idValue));
+      setError(null);
     } catch (error) {
+      setError('Failed to delete record');
       console.error('There was an error deleting the ID!', error);
     }
   };
