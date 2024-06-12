@@ -41,10 +41,10 @@ def delete_id(request):
         try:
             data = json.loads(request.body)
             id_value = data.get('id_value')
-            record = YourModel.objects.get(id_value=id_value)
+            record = IDRecord.objects.get(id_value=id_value)
             record.delete()
             return JsonResponse({'message': 'Record deleted successfully'})
-        except YourModel.DoesNotExist:
+        except IDRecord.DoesNotExist:
             return JsonResponse({'error': 'Record not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
