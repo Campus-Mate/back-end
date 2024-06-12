@@ -41,6 +41,20 @@ const SendID = () => {
     }
   };
 
+  const handleDelete = async (idValue) => {
+    try {
+      await axios.delete('http://3.37.222.122:8001/api/delete_id/', {
+        data: { id_value: idValue },
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      setCheckResponse(checkResponse.filter(record => record.id_value !== idValue));
+    } catch (error) {
+      console.error('There was an error deleting the ID!', error);
+    }
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -104,6 +118,7 @@ const SendID = () => {
               <p>Content: {record.content}</p>
               <p>Category: {record.category}</p>
               <p>Created At: {record.created_at}</p>
+              <button onClick={() => handleDelete(record.id_value)}>Delete</button>
             </div>
           ))}
         </div>

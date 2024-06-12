@@ -34,6 +34,21 @@ def show_id(request):
             return JsonResponse({'error': 'Record not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': 'Internal Server Error'}, status=500)
+    
+@csrf_exempt
+def delete_id(request):
+    if request.method == 'DELETE':
+        try:
+            data = json.loads(request.body)
+            id_value = data.get('id_value')
+            record = YourModel.objects.get(id_value=id_value)
+            record.delete()
+            return JsonResponse({'message': 'Record deleted successfully'})
+        except YourModel.DoesNotExist:
+            return JsonResponse({'error': 'Record not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 @api_view(['POST'])
