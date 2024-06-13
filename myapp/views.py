@@ -45,7 +45,11 @@ def delete_id(request):
         try:
             data = json.loads(request.body)
             id_value = data.get('id_value')
-            records = IDRecord.objects.filter(id_value=id_value)
+            title = data.get('title')
+            if not id_value or not title:
+                return JsonResponse({'error': 'ID value and title are required'}, status=400)
+            
+            records = IDRecord.objects.filter(id_value=id_value, title=title)
             if records.exists():
                 count, _ = records.delete()
                 return JsonResponse({'message': f'{count} Record(s) deleted successfully'})
