@@ -8,6 +8,7 @@ const SendID = () => {
   const [title, setTitle] = useState('');
   const [responseData, setResponseData] = useState(null);
   const [checkId, setCheckId] = useState('');
+  const [checkTitle, setCheckTitle] = useState('');
   const [checkResponse, setCheckResponse] = useState([]);
   const [error, setError] = useState(null);
 
@@ -26,9 +27,9 @@ const SendID = () => {
     }
   };
 
-  const handleCheckId = async () => {
+  const handleCheckIdAndTitle = async () => {
     try {
-      const response = await axios.post('http://3.37.222.122:8001/api/show_id/', { id_value: checkId }, {
+      const response = await axios.post('http://3.37.222.122:8001/api/show_id/', { id_value: checkId, title: checkTitle }, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -47,7 +48,7 @@ const SendID = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        data: { id_value: idValue } // 'data' 속성에 id_value 포함
+        data: { id_value: idValue }
       });
       setCheckResponse(checkResponse.filter(record => record.id_value !== idValue));
       setError(null);
@@ -78,14 +79,12 @@ const SendID = () => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="Enter content. no limit"
         />
-        
         <input
           type="text"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Enter category. max length 255"
         />
-        
         <button type="submit">Send Data</button>
       </form>
       
@@ -107,7 +106,13 @@ const SendID = () => {
           onChange={(e) => setCheckId(e.target.value)}
           placeholder="Enter ID to check"
         />
-        <button onClick={handleCheckId}>Check ID</button>
+        <input
+          type="text"
+          value={checkTitle}
+          onChange={(e) => setCheckTitle(e.target.value)}
+          placeholder="Enter title to check"
+        />
+        <button onClick={handleCheckIdAndTitle}>Check ID and Title</button>
       </div>
       
       {checkResponse.length > 0 && (

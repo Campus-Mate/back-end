@@ -24,10 +24,11 @@ def receive_id(request):
 @api_view(['POST'])
 def show_id(request):
     id_token = request.data.get('id_value')
-    if not id_token:
-        return JsonResponse({'error': 'ID value is required'}, status=400)
+    title = request.data.get('title')
+    if not id_token or not title:
+        return JsonResponse({'error': 'ID value and title are required'}, status=400)
     try:
-        records = IDRecord.objects.filter(id_value=id_token)
+        records = IDRecord.objects.filter(id_value=id_token, title=title)
         if records.exists():
             serializer = IDRecordSerializer(records, many=True)
             return JsonResponse(serializer.data, status=200, safe=False)
@@ -35,6 +36,7 @@ def show_id(request):
             return JsonResponse({'error': 'Record not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': 'Internal Server Error'}, status=500)
+
 
 @csrf_exempt
 @api_view(['DELETE'])
