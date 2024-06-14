@@ -10,6 +10,8 @@ const SendID = () => {
   const [checkId, setCheckId] = useState('');
   const [checkTitle, setCheckTitle] = useState('');
   const [checkResponse, setCheckResponse] = useState([]);
+  const [checkIdOnly, setCheckIdOnly] = useState('');
+  const [checkIdOnlyResponse, setCheckIdOnlyResponse] = useState([]);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -39,6 +41,21 @@ const SendID = () => {
     } catch (error) {
       setError('Record not found');
       setCheckResponse([]);
+    }
+  };
+
+  const handleCheckIdOnly = async () => {
+    try {
+      const response = await axios.post('http://3.37.222.122:8001/api/show_id_by_id/', { id_value: checkIdOnly }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      setCheckIdOnlyResponse(response.data);
+      setError(null);
+    } catch (error) {
+      setError('Record not found');
+      setCheckIdOnlyResponse([]);
     }
   };
 
@@ -126,6 +143,31 @@ const SendID = () => {
               <p>Category: {record.category}</p>
               <p>Created At: {record.created_at}</p>
               <button onClick={() => handleDelete(record.id_value)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div>
+        <input
+          type="text"
+          value={checkIdOnly}
+          onChange={(e) => setCheckIdOnly(e.target.value)}
+          placeholder="Enter ID to check only by ID"
+        />
+        <button onClick={handleCheckIdOnly}>Check ID Only</button>
+      </div>
+      
+      {checkIdOnlyResponse.length > 0 && (
+        <div>
+          <h3>Record Details by ID</h3>
+          {checkIdOnlyResponse.map(record => (
+            <div key={record.id}>
+              <p>ID: {record.id_value}</p>
+              <p>Title: {record.title}</p>
+              <p>Content: {record.content}</p>
+              <p>Category: {record.category}</p>
+              <p>Created At: {record.created_at}</p>
             </div>
           ))}
         </div>
