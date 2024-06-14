@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import receive_id, show_id, check_id, delete_id
+from .views import receive_id, show_id, check_id, delete_id,show_id_by_id
 from . import views
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     path('show_id/', show_id, name='show_id'),
     path('check_id/', check_id, name='check_id'),
     path('delete_id/', delete_id, name='delete_id'),  # 추가된 삭제 엔드포인트
-    
+    path('show_id_by_id/',show_id_by_id, name='show_id_by_id'),  # 새로운 엔드포인트 추가
+
     path('', views.index, name='index'),  # 루트 URL에 대한 뷰 정의
 ]
