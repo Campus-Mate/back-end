@@ -36,6 +36,16 @@ def show_id_by_id(request):
     except Exception as e:
         return JsonResponse({'error': 'Internal Server Error'}, status=500)
 
+@csrf_exempt
+@api_view(['GET'])
+def get_all_records(request):
+    try:
+        records = IDRecord.objects.all()
+        serializer = IDRecordSerializer(records, many=True)
+        return JsonResponse(serializer.data, status=200, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': 'Internal Server Error'}, status=500)
+
 
 @csrf_exempt
 @api_view(['POST'])

@@ -13,6 +13,7 @@ const SendID = () => {
   const [checkIdOnly, setCheckIdOnly] = useState('');
   const [checkIdOnlyResponse, setCheckIdOnlyResponse] = useState([]);
   const [error, setError] = useState(null);
+  const [allRecords, setAllRecords] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +73,17 @@ const SendID = () => {
     } catch (error) {
       setError('Failed to delete record');
       console.error('There was an error deleting the ID!', error);
+    }
+  };
+
+  const fetchAllRecords = async () => {
+    try {
+      const response = await axios.get('http://3.37.222.122:8001/api/get_all_records/');
+      setAllRecords(response.data);
+      setError(null);
+    } catch (error) {
+      setError('Failed to fetch records');
+      console.error('There was an error fetching all records!', error);
     }
   };
 
@@ -174,6 +186,25 @@ const SendID = () => {
       )}
       
       {error && <p>{error}</p>}
+      
+      <div>
+        <button onClick={fetchAllRecords}>Fetch All Records</button>
+      </div>
+      
+      {allRecords.length > 0 && (
+        <div>
+          <h3>All Records</h3>
+          {allRecords.map(record => (
+            <div key={record.id}>
+              <p>ID: {record.id_value}</p>
+              <p>Title: {record.title}</p>
+              <p>Content: {record.content}</p>
+              <p>Category: {record.category}</p>
+              <p>Created At: {record.created_at}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
